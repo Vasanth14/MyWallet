@@ -6,6 +6,7 @@ import { balanceAtom, modalAtom } from "../atoms";
 import useLoggedUser from "../hooks/userLoggedUser";
 import DropDown from "./DropDown";
 import Modal from "./Modal";
+
 const Dashboard = () => {
   const setmodal = useSetRecoilState(modalAtom);
   const [users, setUsers] = useState();
@@ -39,6 +40,7 @@ const Dashboard = () => {
     }
     getUser();
   }, [inp]);
+
   return (
     <div className="h-full bg-white text-black">
       <header className="flex items-center justify-between border-b-[1px] border-slate p-5">
@@ -59,15 +61,24 @@ const Dashboard = () => {
         </div>
       </header>
       <div className="p-5 text-center">
-      <h1 className="font-bold text-xl mb-3">Good Day, {!isLoading && user?.firstname}!</h1>
+      <div className="flex justify-center items-center mb-5">
+          {/* Display user's profile picture */}
+          {!isLoading && user?.profilePic && (
+            <img
+              src={user.profilePic}
+              alt="Profile Picture"
+              className="rounded-full w-20 h-20 object-cover"
+            />
+          )}
+        </div>
+        <h1 className="font-bold text-xl mb-3">Good Day, {!isLoading && user?.firstname}!</h1>
+
         <p className="mb-5 font-bold text-xl">
           Your Balance{" "}
           <span className="pl-3">
             {!loading ? `$ ${balance?.toFixed(2)}` : "Loading"}
           </span>
         </p>
-        
-
       </div>
 
       <Modal />
